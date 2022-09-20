@@ -179,7 +179,7 @@ contract NearFinanceProtocol is Context, IBEP20, Ownable {
         buyLimitEnd = block.timestamp + (300 seconds);
     }
 
-    /// @dev 
+    /// @dev this function would be used to provide liquidity for the nrf token
     function addLiquidity() external onlyOwner() {
         IPancakeRouter02 _pancakeV2Router = IPancakeRouter02(0x10ED43C718714eb63d5aA57B78B54704E256024E);
         pancakeV2Router = _pancakeV2Router;
@@ -201,11 +201,13 @@ contract NearFinanceProtocol is Context, IBEP20, Ownable {
         swapTokensForEth(contractBalance);
     }
 
+    /// @dev bnb distrubution is ususally during transfer, but when the manual swap token for eth is called, the bnb sent would be locked in the contract but using manual distrubute eth the token would be sent to _boost address and the _development
     function manualDistributeETH() external onlyOwner() {
         uint256 contractETHBalance = address(this).balance;
         distributeETH(contractETHBalance);
     }
 
+    /// @dev swapping bnb for the current target token, on default, the target token is WBNB
     function manualSwapEthForTargetToken(uint amount) external onlyOwner() {
         swapETHfortargetToken(amount);
     }
